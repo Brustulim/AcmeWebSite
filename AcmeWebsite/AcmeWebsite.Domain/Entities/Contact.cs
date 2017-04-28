@@ -22,6 +22,7 @@ namespace AcmeWebsite.Domain.Entities
         //ValueObject used here
         public Phone Phone { get; private set; }
 
+        public const int StateMaxLength = 2;
         public string State { get; private set; }
 
         public int City { get; private set; }
@@ -92,6 +93,7 @@ namespace AcmeWebsite.Domain.Entities
         public void SetState(string state)
         {
             Validator.ForNullOrEmptyDefaultMessage(state, "State");
+            Validator.StringMaxLengthDefaultMessage("State", state, StateMaxLength);
             State = state;
         }
 
@@ -110,7 +112,6 @@ namespace AcmeWebsite.Domain.Entities
 
             Message = message;
         }
-
 
         #endregion
 

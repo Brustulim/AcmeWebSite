@@ -232,6 +232,13 @@ namespace AcmeWebsite.Domain.Tests.Entities
             Contact.SetLastName("John Do");
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void Contact_State_Error_Max_Length()
+        {
+            Contact.SetState(Util.GenerateStringWithSpecificLength(Contact.StateMaxLength + 1));
+        }
+
 
         [TestMethod]
         [ExpectedException(typeof(Exception))]
