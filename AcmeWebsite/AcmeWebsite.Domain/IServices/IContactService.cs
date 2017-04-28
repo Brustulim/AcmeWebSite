@@ -1,0 +1,12 @@
+﻿using AcmeWebsite.Domain.Entities;
+using AcmeWebsite.Domain.ValueObject;
+
+namespace AcmeWebsite.Domain.IServices
+{
+    public interface IContactService : IServiceBase<Contact>
+    {
+        //Contact Get(int id);
+        Contact GetByEmail(Email email);
+        void Save(Contact contact);
+    }
+}

@@ -30,6 +30,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,13 +41,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContactRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestData\ContactTestData.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AcmeWebsite.Domain\AcmeWebsite.Domain.csproj">
+      <Project>{5f589412-81be-4d55-9036-e905ea246b89}</Project>
+      <Name>AcmeWebsite.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AcmeWebsite.Repositories\AcmeWebsite.Repositories.csproj">
       <Project>{ab654841-9eef-43fa-a17c-c547154abfef}</Project>
       <Name>AcmeWebsite.Repositories</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

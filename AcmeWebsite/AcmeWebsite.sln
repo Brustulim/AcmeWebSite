@@ -42,6 +42,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcmeWebsite.Repositories", 
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcmeWebsite.Repositories.Tests", "AcmeWebsite.Repositories.Tests\AcmeWebsite.Repositories.Tests.csproj", "{0DA8D235-CDE8-4CE3-B189-97C5FD8BC124}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A2F3107A-9FD3-441C-9B46-52E492CCD9E0} = {A2F3107A-9FD3-441C-9B46-52E492CCD9E0}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcmeWebsite.StartUp", "AcmeWebsite.StartUp\AcmeWebsite.StartUp.csproj", "{4ACBE32F-2DAC-4E4A-8AFB-37D6D99142A4}"
 	ProjectSection(ProjectDependencies) = postProject
