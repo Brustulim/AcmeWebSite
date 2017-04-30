@@ -1,12 +1,11 @@
-﻿using AcmeWebsite.Domain.Entities;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using AcmeWebsite.Domain.Entities;
 
-namespace AcmeWebsite.Domain.IRepositories
+namespace AcmeWebsite.AppApi.IServices
 {
     //Interface for repository (only can used by classes tha implements EntityBase)
-    public interface IRepositoryBase<TEntity> : IDisposable  where TEntity : EntityBase
+    public interface IAppServiceBase<TEntity> where TEntity : EntityBase
     {
         void Add(TEntity obj);
         void AddList(IEnumerable<TEntity> obj);

@@ -1,11 +1,11 @@
 ﻿using AcmeWebsite.Domain.Entities;
 using AcmeWebsite.Domain.ValueObject;
 
-namespace AcmeWebsite.Domain.IRepositories
+namespace AcmeWebsite.AppApi.IServices
 {
-    public interface IContactRepository : IRepositoryBase<Contact>
+    public interface IContactAppService : IAppServiceBase<Contact>
     {
-        Contact Get(int id);
+        //Contact Get(int id);
         Contact GetByEmail(Email email);
         void Save(Contact contact);
     }

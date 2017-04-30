@@ -1,6 +1,6 @@
-﻿using AcmeWebsite.Domain.ValueObject;
+﻿using System;
+using AcmeWebsite.Domain.ValueObject;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace AcmeWebsite.Domain.Tests.ValueObject
 {

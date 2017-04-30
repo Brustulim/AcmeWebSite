@@ -1,11 +1,6 @@
 ﻿using AcmeWebsite.Domain.Entities;
 using AcmeWebsite.Domain.IRepositories;
 using AcmeWebsite.Domain.IServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AcmeWebsite.Domain.ValueObject;
 
 namespace AcmeWebsite.Domain.Services
@@ -21,7 +16,6 @@ namespace AcmeWebsite.Domain.Services
             _contactRepository = contactRepository;
         }
 
-        
         public Contact GetByEmail(Email email)
         {
             return _contactRepository.GetByEmail(email);

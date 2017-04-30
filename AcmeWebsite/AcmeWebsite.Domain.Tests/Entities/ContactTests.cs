@@ -1,8 +1,8 @@
-﻿using AcmeWebsite.Domain.Entities;
+﻿using System;
+using AcmeWebsite.Domain.Entities;
 using AcmeWebsite.Domain.ValueObject;
 using AcmeWebsite.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace AcmeWebsite.Domain.Tests.Entities
 {

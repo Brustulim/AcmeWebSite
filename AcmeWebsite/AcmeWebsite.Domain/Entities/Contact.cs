@@ -1,7 +1,6 @@
-﻿using AcmeWebsite.Domain.ValueObject;
+﻿using System;
+using AcmeWebsite.Domain.ValueObject;
 using AcmeWebsite.Helpers;
-using System;
-using System.Text.RegularExpressions;
 
 namespace AcmeWebsite.Domain.Entities
 {
@@ -78,6 +77,7 @@ namespace AcmeWebsite.Domain.Entities
 
         public void SetEmail(Email email)
         {
+
             if (email == null)
                 throw new Exception("E-mail is required!");
 

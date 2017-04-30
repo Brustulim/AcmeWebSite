@@ -1,10 +1,10 @@
-﻿using AcmeWebsite.Domain.Entities;
-using AcmeWebsite.Domain.ValueObject;
+﻿using System;
+using System.Linq;
+using AcmeWebsite.Domain.Entities;
 using AcmeWebsite.Domain.IRepositories;
+using AcmeWebsite.Domain.ValueObject;
 using AcmeWebsite.Repositories.Tests.TestData;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Linq;
 
 namespace AcmeWebsite.Repositories.Tests
 {
@@ -12,8 +12,10 @@ namespace AcmeWebsite.Repositories.Tests
     public class ContactRepositoryTests
     {
 
+        /*
+
         private readonly IContactRepository _contactRepository;
-        private readonly RepositoryForTests<Contact> _repository;
+        //private readonly RepositoryForTests<Contact> _repository;
 
        // private readonly RepositoryBase<Contact> _repositoryBase;
 
@@ -21,11 +23,13 @@ namespace AcmeWebsite.Repositories.Tests
         public ContactRepositoryTests()
         {
             //Use the testData Class for populate Repository (the in memory one)
-            _repository = new RepositoryForTests<Contact>(ContactTestData.Get());
+            //_repository = new RepositoryForTests<Contact>(ContactTestData.Get());
 
             //Instantiate _contactRepository with de "Context" from memory
             //Before tests we can change for database for extra tests with the real ambient
-            _contactRepository = new ContactRepository(_repository);
+            //_contactRepository = new ContactRepository(_repository);
+            _contactRepository = new ContactRepository();
+            ContactTestData.AddOrUpdateTestData(_contactRepository);
 
             //_repositoryBase = new ContactRepository(_contactRepository);
             //_contactRepository = new ContactRepository(_repositoryBase);
@@ -54,20 +58,20 @@ namespace AcmeWebsite.Repositories.Tests
         {
             Contact Contact = new Contact("Buck", "Rogers", new Email("planet@mailinator.com"), new Phone("(321) 888-9999"), "PN", 21, "Buck from tests!");
 
-            int itensBeforeSave = _repository.Get().Count();
+            int itensBeforeSave = _contactRepository.Get().Count();
 
             _contactRepository.Save(Contact);
 
-            int itensAfterSave = _repository.Get().Count();
+            int itensAfterSave = _contactRepository.Get().Count();
 
-            Assert.IsTrue(_repository.isCommited);
+            //Assert.IsTrue(_repository.isCommited);
             Assert.AreEqual(itensBeforeSave + 1, itensAfterSave);
         }
 
         [TestMethod]
         public void ContactRepository_Get_By_Id()
         {
-            Contact Contact = _repository.First();
+            Contact Contact = _contactRepository.First();
             Assert.AreEqual(Contact, _contactRepository.Get(Contact.Id));
         }
 
@@ -97,6 +101,6 @@ namespace AcmeWebsite.Repositories.Tests
 
         //Todo: Analyze and implement other Unit Tests
 
-
+    */
     }
 }

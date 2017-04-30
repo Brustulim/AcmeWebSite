@@ -1,6 +1,6 @@
-﻿using AcmeWebsite.Helpers;
-using System;
+﻿using System;
 using System.Text.RegularExpressions;
+using AcmeWebsite.Helpers;
 
 namespace AcmeWebsite.Domain.ValueObject
 {

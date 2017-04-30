@@ -1,6 +1,6 @@
-﻿using AcmeWebsite.Domain.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using AcmeWebsite.Domain.Entities;
 
 namespace AcmeWebsite.Domain.IServices
 {

@@ -1,7 +1,7 @@
-﻿using AcmeWebsite.Domain.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AcmeWebsite.Domain.Entities;
 
 namespace AcmeWebsite.Domain.IRepositories
 {

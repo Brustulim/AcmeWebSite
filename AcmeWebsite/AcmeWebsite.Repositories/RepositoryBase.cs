@@ -1,39 +1,33 @@
-﻿using AcmeWebsite.Domain.Entities;
-using AcmeWebsite.Domain.IRepositories;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
+using AcmeWebsite.Domain.Entities;
+using AcmeWebsite.Domain.IRepositories;
 
 namespace AcmeWebsite.Repositories
 {
 
-    public class RepositoryBase<TEntity> : IDisposable, IRepositoryBase<TEntity> where TEntity : EntityBase
+    public abstract class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where TEntity : EntityBase
     {
 
-               
-        protected readonly EfDbContext Context;
-                
+        private readonly EfDbContext _context;
+        
         public RepositoryBase(EfDbContext context)
         {
-            Context = context;
-        }
-
-        
-        public RepositoryBase()
-        {
-            //Context = context;
-            Context = new EfDbContext();
+            _context = context;
+            //Context = new EfDbContext();
         }
         
-        private DbSet<TEntity> Entity { get { return Context.Set<TEntity>(); } }
+        private DbSet<TEntity> Entity { get { return _context.Set<TEntity>(); } }
 
 
 
         public void Add(TEntity obj)
         {
-            obj.DateCreation = DateTime.Now;
+            obj.CreationDate = DateTime.Now;
             Entity.Add(obj);
         }
 
@@ -82,7 +76,7 @@ namespace AcmeWebsite.Repositories
         {
             //if we are using more complex entities, we can implement DataChange, UserChange here
             //obj.DateChange = DateTime.Now;
-            Context.Entry(obj).State = EntityState.Modified;
+            _context.Entry(obj).State = EntityState.Modified;
         }
 
         public void AddOrUpdate(TEntity obj)
@@ -97,7 +91,7 @@ namespace AcmeWebsite.Repositories
         {
             try
             {
-                Context.SaveChanges();
+                _context.SaveChanges();
             }
             catch (DbEntityValidationException e)
             {
@@ -123,8 +117,9 @@ namespace AcmeWebsite.Repositories
 
         public void Dispose()
         {
-            Context.Dispose();
+            _context.Dispose();
         }
+
     }
 
 }

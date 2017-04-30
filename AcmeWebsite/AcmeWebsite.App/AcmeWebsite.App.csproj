@@ -40,9 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IRepositories\IContactRepository.cs" />
-    <Compile Include="IRepositories\IRepositoryBase.cs" />
+    <Compile Include="IServices\IContactAppService.cs" />
+    <Compile Include="IServices\IAppServiceBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ContactAppService.cs" />
+    <Compile Include="Services\AppServiceBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AcmeWebsite.Domain\AcmeWebsite.Domain.csproj">

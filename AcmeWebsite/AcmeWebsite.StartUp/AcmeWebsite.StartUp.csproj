@@ -30,7 +30,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -40,22 +53,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="DependencyResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AcmeWebsite.App\AcmeWebsite.App.csproj">
-      <Project>{c6d836e3-7e03-410d-bfd7-886d6c3e46e2}</Project>
-      <Name>AcmeWebsite.App</Name>
-    </ProjectReference>
     <ProjectReference Include="..\AcmeWebsite.Domain\AcmeWebsite.Domain.csproj">
       <Project>{5f589412-81be-4d55-9036-e905ea246b89}</Project>
       <Name>AcmeWebsite.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AcmeWebsite.Helpers\AcmeWebsite.Helpers.csproj">
+      <Project>{a2f3107a-9fd3-441c-9b46-52e492ccd9e0}</Project>
+      <Name>AcmeWebsite.Helpers</Name>
     </ProjectReference>
     <ProjectReference Include="..\AcmeWebsite.Repositories\AcmeWebsite.Repositories.csproj">
       <Project>{ab654841-9eef-43fa-a17c-c547154abfef}</Project>
       <Name>AcmeWebsite.Repositories</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

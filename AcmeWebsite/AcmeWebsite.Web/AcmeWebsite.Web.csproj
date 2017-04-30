@@ -215,10 +215,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AcmeWebsite.App\AcmeWebsite.App.csproj">
-      <Project>{c6d836e3-7e03-410d-bfd7-886d6c3e46e2}</Project>
-      <Name>AcmeWebsite.App</Name>
-    </ProjectReference>
     <ProjectReference Include="..\AcmeWebsite.Domain\AcmeWebsite.Domain.csproj">
       <Project>{5f589412-81be-4d55-9036-e905ea246b89}</Project>
       <Name>AcmeWebsite.Domain</Name>

@@ -1,27 +1,21 @@
-﻿using AcmeWebsite.Domain.Entities;
-using AcmeWebsite.Domain.IServices;
-using AcmeWebsite.Domain.IRepositories;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AcmeWebsite.Domain.Entities;
+using AcmeWebsite.Domain.IRepositories;
+using AcmeWebsite.Domain.IServices;
 
 namespace AcmeWebsite.Domain.Services
 {
     public class ServiceBase<TEntity> : IDisposable, IServiceBase<TEntity> where TEntity : EntityBase
     {
-        //This class, diferent from Repositorie, receive reference from Repositorie Project (DB), and still independent because dependency inversion
         
         private readonly IRepositoryBase<TEntity> _repository;
 
         public ServiceBase(IRepositoryBase<TEntity> repository)
         {
-            //Dependency Injection (after use concret class)
             _repository = repository;
-
         }
-
-        public int Id { get; set; }
-        public DateTime DateCreation { get; set; }
 
         public void Add(TEntity obj)
         {
