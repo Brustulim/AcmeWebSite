@@ -28,6 +28,9 @@ namespace AcmeWebsite.Repositories.Tests
             //Instantiate _contactRepository with de "Context" from memory
             //Before tests we can change for database for extra tests with the real ambient
             //_contactRepository = new ContactRepository(_repository);
+
+
+            
             _contactRepository = new ContactRepository();
             ContactTestData.AddOrUpdateTestData(_contactRepository);
 
@@ -100,7 +103,7 @@ namespace AcmeWebsite.Repositories.Tests
 
 
         //Todo: Analyze and implement other Unit Tests
-
-    */
+*/
+    
     }
 }
