@@ -1,10 +1,4 @@
-﻿using System;
-using System.Linq;
-using AcmeWebsite.Domain.Entities;
-using AcmeWebsite.Domain.IRepositories;
-using AcmeWebsite.Domain.ValueObject;
-using AcmeWebsite.Repositories.Tests.TestData;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AcmeWebsite.Repositories.Tests
 {

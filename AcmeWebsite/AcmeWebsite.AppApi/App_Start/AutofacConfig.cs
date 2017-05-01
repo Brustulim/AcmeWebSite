@@ -7,7 +7,7 @@ using AcmeWebsite.Repositories;
 using Autofac;
 using Autofac.Integration.WebApi;
 
-namespace AcmeWebsite.AppApi.App_Start
+namespace AcmeWebsite.AppWebApi.App_Start
 {
     public class AutofacConfig
     {

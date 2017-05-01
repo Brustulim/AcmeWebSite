@@ -1,8 +1,7 @@
+using System.Data.Entity.Migrations;
+
 namespace AcmeWebsite.Repositories.Migrations
 {
-    using System;
-    using System.Data.Entity.Migrations;
-    
     public partial class Mig_DB_Change_Contact : DbMigration
     {
         public override void Up()

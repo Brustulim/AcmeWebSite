@@ -1,20 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Web;
+﻿using System.Web;
 using System.Web.Http;
-using AcmeWebsite.AppApi.App_Start;
-using AcmeWebsite.Domain.IRepositories;
-using AcmeWebsite.Domain.IServices;
-using AcmeWebsite.Domain.Services;
-using AcmeWebsite.Repositories;
-using Autofac;
-using Autofac.Integration.WebApi;
+using AcmeWebsite.AppWebApi.App_Start;
 
-namespace AcmeWebsite.AppApi
+namespace AcmeWebsite.AppWebApi
 {
-    public class WebApiApplication : System.Web.HttpApplication
+    public class WebApiApplication : HttpApplication
     {
         protected void Application_Start()
         {

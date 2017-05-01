@@ -49,7 +49,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcmeWebsite.Web", "AcmeWebs
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcmeWebsite.WebTests", "AcmeWebsite.WebTests\AcmeWebsite.WebTests.csproj", "{34C5B74F-6210-448B-B01A-400BADC88643}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcmeWebsite.AppApi", "AcmeWebsite.AppApi\AcmeWebsite.AppApi.csproj", "{BF4086A8-7072-4111-9499-FCFAA68AF24D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcmeWebsite.AppWebApi", "AcmeWebsite.AppApi\AcmeWebsite.AppWebApi.csproj", "{BF4086A8-7072-4111-9499-FCFAA68AF24D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

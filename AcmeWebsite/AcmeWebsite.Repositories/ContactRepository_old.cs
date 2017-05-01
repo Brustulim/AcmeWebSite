@@ -1,9 +1,4 @@
-﻿using System.Linq;
-using AcmeWebsite.Domain.Entities;
-using AcmeWebsite.Domain.IRepositories;
-using AcmeWebsite.Domain.ValueObject;
-
-namespace AcmeWebsite.Repositories
+﻿namespace AcmeWebsite.Repositories
 {
     /*
     public class ContactRepository_old : RepositoryBase<Contact>, IContactRepository
