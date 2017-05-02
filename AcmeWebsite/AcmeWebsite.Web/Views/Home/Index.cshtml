@@ -1,31 +1,697 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    Layout = null;
 }
+@using System.ServiceModel.Activities
+@using AcmeWebsite.Web.Models
+@model AcmeWebsite.Web.Models.ContactModel
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+<!DOCTYPE html>
+<html lang="en">
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Acme Inc. - Redefining Pain For Over 60 Years</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Theme CSS -->
+    <link href="~/Content/freelancer.min.css" rel="stylesheet" />
+
+    <!-- Custom Fonts -->
+    <link href="~/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- jQuery -->
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+   
+    <script type="text/javascript">
+
+                                $(function () {
+                                    $('#State').on('change', function () {
+                                        var cityDropdown = $('#City');
+                                        //disable city drop down
+                                        cityDropdown.prop('disabled', 'disabled');
+                                        //clear drop down of old city
+                                        cityDropdown.empty();
+
+                                        //retrieve selected state
+                                        var state = $(this).val();
+                                        if (state.length > 0) {
+                                            // retrieve data using a Url.Action() to construct url
+                                            $.getJSON('@Url.Action("GetCityJson")', {
+                                                stateAcronym: state
+                                            })
+                                            .done(function (data) {
+                                                //re-enable city drop down
+                                                cityDropdown.removeProp('disabled');
+                                                //for each returned state
+                                                $.each(data, function (i, city) {
+
+                                                    var option = $('<option></option>').attr("value", data[i].Id).text(data[i].Name);
+                                                    cityDropdown.append(option);
+
+                                                });
+
+                                            })
+                                            .fail(function (jqxhr, textStatus, error) {
+                                                var err = textStatus + ", " + error;
+                                                console.log("Request Failed: " + err);
+                                            });
+                                        }
+                                    });
+                                })
+    
+    
+
+    
+    
+    </script>
+
+    
+</head>
+
+<body id="page-top" class="index">
+    <div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
+
+    <!-- Navigation -->
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="#page-top">Acme Inc.</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="#portfolio">New Products</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="#about">About</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="#contact">Contact Us</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <!-- Header -->
+    <header>
+        <div class="container" id="maincontent" tabindex="-1">
+            <div class="row">
+                <div class="col-lg-12">
+                    @*<img class="img-responsive" src="img/profile.png" alt="">*@
+                    <img class="img-responsive" src="~/Images/acme_logo.png" alt="">
+                    <div class="intro-text">
+                        <h1 class="name">Acme Inc.</h1>
+                        <hr class="star-light">
+                        <span class="skills">Redefining Pain For Over 60 Years</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Portfolio Grid Section -->
+    <section id="portfolio">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>New Products</h2>
+                    <hr class="star-primary">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 portfolio-item">
+                    <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal">
+                        <div class="caption">
+                            <div class="caption-content">
+                                <i class="fa fa-search-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img src="~/Images/Products/the-acme-catalog-1.jpg" class="img-responsive" alt="Amazing Anvil">
+                    </a>
+                </div>
+                <div class="col-sm-4 portfolio-item">
+                    <a href="#portfolioModal2" class="portfolio-link" data-toggle="modal">
+                        <div class="caption">
+                            <div class="caption-content">
+                                <i class="fa fa-search-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img src="~/Images/Products/the-acme-catalog-2.jpg" class="img-responsive" alt="The Fantastic Jet Wheel Seat">
+                    </a>
+                </div>
+                <div class="col-sm-4 portfolio-item">
+                    <a href="#portfolioModal3" class="portfolio-link" data-toggle="modal">
+                        <div class="caption">
+                            <div class="caption-content">
+                                <i class="fa fa-search-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img src="~/Images/Products/the-acme-catalog-3.jpg" class="img-responsive" alt="Leg Muscle Vitamins">
+                    </a>
+                </div>
+                <div class="col-sm-4 portfolio-item">
+                    <a href="#portfolioModal4" class="portfolio-link" data-toggle="modal">
+                        <div class="caption">
+                            <div class="caption-content">
+                                <i class="fa fa-search-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img src="~/Images/Products/the-acme-catalog-4.jpg" class="img-responsive" alt="Instant Girl">
+                    </a>
+                </div>
+                <div class="col-sm-4 portfolio-item">
+                    <a href="#portfolioModal5" class="portfolio-link" data-toggle="modal">
+                        <div class="caption">
+                            <div class="caption-content">
+                                <i class="fa fa-search-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img src="~/Images/Products/the-acme-catalog-5.jpg" class="img-responsive" alt="Bat Flying Costume">
+                    </a>
+                </div>
+                <div class="col-sm-4 portfolio-item">
+                    <a href="#portfolioModal6" class="portfolio-link" data-toggle="modal">
+                        <div class="caption">
+                            <div class="caption-content">
+                                <i class="fa fa-search-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img src="~/Images/Products/the-acme-catalog-6.jpg" class="img-responsive" alt="Iron Carrot">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="success" id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>About</h2>
+                    <hr class="star-light">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-lg-offset-2">
+                    <p>We are a conglomerate of companies that make everything from cork stoppers and anvils to what your imagination desires. Always with the concern of creating creative products, useful (or not), because what matters is the satisfaction of the consumer.</p>
+                </div>
+                <div class="col-lg-4">
+                    <p>
+                        We serve all kinds of clients, whether you real or fictitious you can count on our work.
+                        If you need directions we have clients of international fame among them Wile E. Coyote, Daffy Duck and Bugs Bunny, which can prove our creative, but not always functional work.
+                    </p>
+                </div>
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+                    @*<a href="#" class="btn btn-lg btn-outline">
+                            <i class="fa fa-download"></i> Download Theme
+                        </a>*@
+                    @*<ul>
+                            <li><b>Mission: </b> Make the World More Fun</li>
+                            <li><b>Vision: </b> Change the history end</li>
+                            <li><b>Values: </b> Be committed to creativity and lack of sense of our customers</li>
+                        </ul>*@
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>Contact Us!</h2>
+                    <hr class="star-primary">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+
+                    <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
+                    <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
+                    @using (Html.BeginForm("PostContactForm", "Home", FormMethod.Post))
+                    {
+                        @*< form name="sentMessage" id="contactForm" novalidate>*@
+
+
+
+                        <div class="row control-group">
+                            @*<span class="col-xs-1  input-group-addon"><i class="glyphicon glyphicon-user"></i></span>*@
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label for="Name">First Name</label>
+                                <input type="text" class="form-control" placeholder="First Name" id="Name" name="Name" required data-validation-required-message="Please enter your first name.">
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <div class="row control-group">
+                            @*<span class="col-xs-1 input-group-addon"><i class="glyphicon glyphicon-user"></i></span>*@
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label for="LastName">Last Name</label>
+                                <input type="text" class="form-control" placeholder="Last Name" id="LastName" name="LastName" required data-validation-required-message="Please enter your last name.">
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                @*<span for="email" class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>*@
+                                <label for="Email">Email Address</label>
+                                <input type="email" class="form-control" placeholder="Email Address" id="Email" name="Email" required data-validation-required-message="Please enter a valid email address.">
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                @*<span for="phone" class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>*@
+                                <label for="Phone">Phone Number</label>
+                                <input type="tel" class="form-control" placeholder="Phone Number" id="Phone" name="Phone" required data-validation-required-message="Please enter your phone number.">
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+
+
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                @*<div class="col-md-4 selectContainer floating-label-form-group">*@
+
+                                <label for="State">State</label>
+                                <select name="State" id="State" class="form-control selectpicker" placeholder="State">
+                                    <option value="">Please select your state</option>
+                                    @if (!IsPost)
+                                    {
+                                        foreach (StateModel item in ViewBag.States)
+                                         {
+                                             <option value="@item.Acronym">@item.Name</option>
+                                         }
+                                    }
+                                </select>
+
+                                @*</div>*@
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                @*<div class="col-md-4 selectContainer floating-label-form-group">*@
+
+                                <label for="City">City</label>
+                                <select name="City" id="City" class="form-control selectpicker" placeholder="City">
+                                    <option value="">Please select your city</option>
+                                </select>
+                                @*</div>*@
+
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label for="Message">Message</label>
+                                <textarea rows="5" class="form-control" placeholder="Message" id="Message" name="Message" required data-validation-required-message="Please enter a message."></textarea>
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+
+
+                        <br>
+
+                        <div id="success"></div>
+                        <div class="row">
+                            <div class="form-group col-xs-12">
+                                <button type="submit" class="btn btn-success btn-lg">Send</button>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="footer-above">
+            <div class="container">
+                <div class="row">
+                    <div class="footer-col col-md-4">
+                        <h3>Location</h3>
+                        <p>
+                            3481 Melrose Place
+                            <br>Beverly Hills, CA 90210
+                        </p>
+                    </div>
+                    <div class="footer-col col-md-4">
+                        <h3>Around the Web</h3>
+                        <ul class="list-inline">
+                            <li>
+                                <a href="#" class="btn-social btn-outline"><span class="sr-only">Facebook</span><i class="fa fa-fw fa-facebook"></i></a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn-social btn-outline"><span class="sr-only">Google Plus</span><i class="fa fa-fw fa-google-plus"></i></a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn-social btn-outline"><span class="sr-only">Twitter</span><i class="fa fa-fw fa-twitter"></i></a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn-social btn-outline"><span class="sr-only">Linked In</span><i class="fa fa-fw fa-linkedin"></i></a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn-social btn-outline"><span class="sr-only">Dribble</span><i class="fa fa-fw fa-dribbble"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="footer-col col-md-4">
+                        <h3>About Acme</h3>
+                        <p>Acme Inc Lorem Ipsum Bla Bla Bla created by <a href="http://startbootstrap.com">Start Bootstrap</a>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-below">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        Copyright &copy; HB 2017
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+    <div class="scroll-top page-scroll hidden-sm hidden-xs hidden-lg hidden-md">
+        <a class="btn btn-primary" href="#page-top">
+            <i class="fa fa-chevron-up"></i>
+        </a>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+
+    <!-- Portfolio Modals -->
+    <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="modal-body">
+                            <h2>Most Popular Itens Catalog</h2>
+                            <hr class="star-primary">
+                            <img src="~/Images/Products/the-acme-catalog-1.jpg" class="img-responsive img-centered" alt="">
+                            @*<p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
+                                <ul class="list-inline item-details">
+                                    <li>
+                                        Client:
+                                        <strong>
+                                            <a href="http://startbootstrap.com">Start Bootstrap</a>
+                                        </strong>
+                                    </li>
+                                    <li>
+                                        Date:
+                                        <strong>
+                                            <a href="http://startbootstrap.com">April 2014</a>
+                                        </strong>
+                                    </li>
+                                    <li>
+                                        Service:
+                                        <strong>
+                                            <a href="http://startbootstrap.com">Web Development</a>
+                                        </strong>
+                                    </li>
+                                </ul>*@
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="modal-body">
+                            <h2>The Amazing Unicycle</h2>
+                            <hr class="star-primary">
+                            <img src="~/Images/Products/the-acme-catalog-2.jpg" class="img-responsive img-centered" alt="">
+                            @*<p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
+                                <ul class="list-inline item-details">
+                                    <li>
+                                        Client:
+                                        <strong>
+                                            <a href="http://startbootstrap.com">Start Bootstrap</a>
+                                        </strong>
+                                    </li>
+                                    <li>
+                                        Date:
+                                        <strong>
+                                            <a href="http://startbootstrap.com">April 2014</a>
+                                        </strong>
+                                    </li>
+                                    <li>
+                                        Service:
+                                        <strong>
+                                            <a href="http://startbootstrap.com">Web Development</a>
+                                        </strong>
+                                    </li>
+                                </ul>*@
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+    <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="modal-body">
+                            <h2>Leg Muscle Vitamins</h2>
+                            <hr class="star-primary">
+                            <img src="~/Images/Products/the-acme-catalog-3.jpg" class="img-responsive img-centered" alt="">
+                            @*<p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
+                                <ul class="list-inline item-details">
+                                    <li>
+                                        Client:
+                                        <strong>
+                                            <a href="http://startbootstrap.com">Start Bootstrap</a>
+                                        </strong>
+                                    </li>
+                                    <li>
+                                        Date:
+                                        <strong>
+                                            <a href="http://startbootstrap.com">April 2014</a>
+                                        </strong>
+                                    </li>
+                                    <li>
+                                        Service:
+                                        <strong>
+                                            <a href="http://startbootstrap.com">Web Development</a>
+                                        </strong>
+                                    </li>
+                                </ul>*@
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="modal-body">
+                            <h2>Instant Girl</h2>
+                            <hr class="star-primary">
+                            <img src="~/Images/Products/the-acme-catalog-4.jpg" class="img-responsive img-centered" alt="">
+                            @*<p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
+                                <ul class="list-inline item-details">
+                                    <li>
+                                        Client:
+                                        <strong>
+                                            <a href="http://startbootstrap.com">Start Bootstrap</a>
+                                        </strong>
+                                    </li>
+                                    <li>
+                                        Date:
+                                        <strong>
+                                            <a href="http://startbootstrap.com">April 2014</a>
+                                        </strong>
+                                    </li>
+                                    <li>
+                                        Service:
+                                        <strong>
+                                            <a href="http://startbootstrap.com">Web Development</a>
+                                        </strong>
+                                    </li>
+                                </ul>*@
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="modal-body">
+                            <h2>Bat Costume</h2>
+                            <hr class="star-primary">
+                            <img src="~/Images/Products/the-acme-catalog-5.jpg" class="img-responsive img-centered" alt="">
+                            @*<p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
+                                <ul class="list-inline item-details">
+                                    <li>
+                                        Client:
+                                        <strong>
+                                            <a href="http://startbootstrap.com">Start Bootstrap</a>
+                                        </strong>
+                                    </li>
+                                    <li>
+                                        Date:
+                                        <strong>
+                                            <a href="http://startbootstrap.com">April 2014</a>
+                                        </strong>
+                                    </li>
+                                    <li>
+                                        Service:
+                                        <strong>
+                                            <a href="http://startbootstrap.com">Web Development</a>
+                                        </strong>
+                                    </li>
+                                </ul>*@
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="modal-body">
+                            <h2>Iron Carrot</h2>
+                            <hr class="star-primary">
+                            <img src="~/Images/Products/the-acme-catalog-6.jpg" class="img-responsive img-centered" alt="">
+                            @*<p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
+                                <ul class="list-inline item-details">
+                                    <li>
+                                        Client:
+                                        <strong>
+                                            <a href="http://startbootstrap.com">Start Bootstrap</a>
+                                        </strong>
+                                    </li>
+                                    <li>
+                                        Date:
+                                        <strong>
+                                            <a href="http://startbootstrap.com">April 2014</a>
+                                        </strong>
+                                    </li>
+                                    <li>
+                                        Service:
+                                        <strong>
+                                            <a href="http://startbootstrap.com">Web Development</a>
+                                        </strong>
+                                    </li>
+                                </ul>*@
+                            <button id="btnSubmit" type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="~/Scripts/Theme/jqBootstrapValidation.js"></script>
+    <script src="~/Scripts/Theme/contact_me.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="~/Scripts/Theme/freelancer.min.js"></script>
+
+</body>
+
+</html>

@@ -2,29 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Microsoft.WindowsAzure.Storage.Table;
 
-namespace AcmeWebsite.LocalityWebApi.Entities
+namespace AcmeWebsite.Web.Models
 {
-    public class City : TableEntity
+    public class CityModel 
     {
+
         public string StateAcronym { get; set; }
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public City(string stateAcronym, string name, int id)
+        public CityModel()
         {
-            PartitionKey = stateAcronym;
-            RowKey = name;
+            
+        }
 
+        public CityModel(string stateAcronym, string name, int id)
+        {
             StateAcronym = stateAcronym;
             Name = name;
             Id = id;
-        }
-
-        public City()
-        {
-            //For serializations
         }
 
     }

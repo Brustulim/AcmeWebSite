@@ -52,6 +52,7 @@ namespace AcmeWebsite.Repositories
         {
             foreach (var entity in obj)
                 Delete(entity);
+
         }
 
 

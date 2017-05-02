@@ -1,19 +1,26 @@
-﻿using AcmeWebsite.Domain.Entities;
+﻿using System.Collections.Generic;
+using System.Linq;
+using AcmeWebsite.Domain.Entities;
 using AcmeWebsite.Domain.IRepositories;
 using AcmeWebsite.Domain.IServices;
 using AcmeWebsite.Domain.ValueObject;
 
 namespace AcmeWebsite.Domain.Services
 {
-    public class ContactService : ServiceBase<Contact>, IContactService
+    public class ContactService : IContactService
     {
 
         private readonly IContactRepository _contactRepository;
 
-        public ContactService(IContactRepository contactRepository)
-         : base(contactRepository)
+        public ContactService(IContactRepository contactRepository)         
         {
             _contactRepository = contactRepository;
+        }
+
+
+        public List<Contact> GetAll()
+        {
+            return _contactRepository.Get().ToList();
         }
 
         public Contact GetByEmail(Email email)
@@ -24,14 +31,15 @@ namespace AcmeWebsite.Domain.Services
         public void Save(Contact contact)
         {
             _contactRepository.Save(contact);
+            _contactRepository.Commit();
         }
 
-        public void InsertNew(string name, string lastName, string email, string phone, string state, int city, string message)
+        public void InsertNew(Contact contact)
         {
+            //Validate rules for contact
 
-
-            Save(new Contact(name,lastName, new Email(email),new Phone(phone),state,city,message) );
-        }
-
+            _contactRepository.Add(contact);
+            _contactRepository.Commit();
+        }        
     }
 }

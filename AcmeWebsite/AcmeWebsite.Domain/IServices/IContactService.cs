@@ -1,13 +1,15 @@
-﻿using AcmeWebsite.Domain.Entities;
+﻿using System.Collections.Generic;
+using AcmeWebsite.Domain.Entities;
 using AcmeWebsite.Domain.ValueObject;
 
 namespace AcmeWebsite.Domain.IServices
 {
-    public interface IContactService : IServiceBase<Contact>
+    public interface IContactService
     {
         //Contact Get(int id);
+        List<Contact> GetAll();
         Contact GetByEmail(Email email);
         void Save(Contact contact);
-        void InsertNew(string name, string lastName, string email, string phone, string state, int city, string message);
+        void InsertNew(Contact contact);
     }
 }

@@ -48,7 +48,6 @@
     <Compile Include="IServices\IServiceBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ContactService.cs" />
-    <Compile Include="Services\ServiceBase.cs" />
     <Compile Include="ValueObject\Email.cs" />
     <Compile Include="ValueObject\Phone.cs" />
   </ItemGroup>
