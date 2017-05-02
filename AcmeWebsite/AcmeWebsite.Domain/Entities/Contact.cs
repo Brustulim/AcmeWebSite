@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Runtime.Remoting;
 using AcmeWebsite.Domain.ValueObject;
 using AcmeWebsite.Helpers;
+using AcmeWebsite.Helpers.Resources;
 
 namespace AcmeWebsite.Domain.Entities
 {
@@ -54,7 +56,7 @@ namespace AcmeWebsite.Domain.Entities
         {
             Validator.ForNullOrEmptyDefaultMessage(name, "Name");
             Validator.StringLengthDefaultMessage("Name", name, NameMinLength, NameMaxLength);
-            Validator.ForContainWhiteSpace(name, "The Name cannot contain white spaces!");
+            Validator.ForContainWhiteSpace(name, Error.NameCannotContainWhiteSpaces) ;
 
             Name = name;
         }
@@ -79,7 +81,7 @@ namespace AcmeWebsite.Domain.Entities
         {
 
             if (email == null)
-                throw new Exception("E-mail is required!");
+                throw new Exception(Error.EmailRequired);
 
             Email = email;
         }
@@ -100,7 +102,7 @@ namespace AcmeWebsite.Domain.Entities
         public void SetCity(int city)
         {
             if (city.Equals(null) || city.Equals(0))
-                throw new Exception("City is required!");
+                throw new Exception(Error.CityRequired);
 
             City = city;
         }

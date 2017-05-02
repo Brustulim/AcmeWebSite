@@ -17,30 +17,30 @@ namespace AcmeWebsite.Domain.Services
             _repository = repository;
         }
 
-        public void Add(TEntity obj)
-        {
-            _repository.Add(obj);
-        }
+        //public void Add(TEntity obj)
+        //{
+        //    _repository.Add(obj);
+        //}
 
-        public void AddList(IEnumerable<TEntity> obj)
-        {
-            _repository.AddList(obj);
-        }
+        //public void AddList(IEnumerable<TEntity> obj)
+        //{
+        //    _repository.AddList(obj);
+        //}
 
-        public void Delete(TEntity obj)
-        {
-            _repository.Delete(obj);
-        }
+        //public void Delete(TEntity obj)
+        //{
+        //    _repository.Delete(obj);
+        //}
 
-        public void Delete(int id)
-        {
-            _repository.Delete(id);
-        }
+        //public void Delete(int id)
+        //{
+        //    _repository.Delete(id);
+        //}
 
-        public void DeleteList(IEnumerable<TEntity> obj)
-        {
-            _repository.DeleteList(obj);
-        }
+        //public void DeleteList(IEnumerable<TEntity> obj)
+        //{
+        //    _repository.DeleteList(obj);
+        //}
 
         public TEntity Get(int id)
         {
@@ -57,20 +57,20 @@ namespace AcmeWebsite.Domain.Services
             return _repository.First();
         }
 
-        public void Update(TEntity obj)
-        {
-            _repository.Update(obj);
-        }
+        //public void Update(TEntity obj)
+        //{
+        //    _repository.Update(obj);
+        //}
 
-        public void AddOrUpdate(TEntity obj)
-        {
-            _repository.AddOrUpdate(obj);
-        }
+        //public void AddOrUpdate(TEntity obj)
+        //{
+        //    _repository.AddOrUpdate(obj);
+        //}
 
-        public void Commit()
-        {
-            _repository.Commit();
-        }
+        //public void Commit()
+        //{
+        //    _repository.Commit();
+        //}
 
         public void Dispose()
         {

@@ -13,7 +13,7 @@ namespace AcmeWebsite.AppWebApi
             var jsonFormatter = formatters.JsonFormatter;
             var settings = jsonFormatter.SerializerSettings;
 
-            jsonFormatter.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.None;
+            jsonFormatter.SerializerSettings.PreserveReferencesHandling =  PreserveReferencesHandling.None;
             config.Formatters.Remove(config.Formatters.XmlFormatter);
             settings.Formatting = Formatting.Indented;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();

@@ -8,5 +8,6 @@ namespace AcmeWebsite.Domain.IServices
         //Contact Get(int id);
         Contact GetByEmail(Email email);
         void Save(Contact contact);
+        void InsertNew(string name, string lastName, string email, string phone, string state, int city, string message);
     }
 }

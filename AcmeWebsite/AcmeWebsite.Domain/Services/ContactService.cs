@@ -26,6 +26,12 @@ namespace AcmeWebsite.Domain.Services
             _contactRepository.Save(contact);
         }
 
+        public void InsertNew(string name, string lastName, string email, string phone, string state, int city, string message)
+        {
+
+
+            Save(new Contact(name,lastName, new Email(email),new Phone(phone),state,city,message) );
+        }
 
     }
 }

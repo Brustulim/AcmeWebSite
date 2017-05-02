@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using AcmeWebsite.AppWebApi.Model;
+using AcmeWebsite.Domain.Entities;
 using AcmeWebsite.Domain.IServices;
 
 
 namespace AcmeWebsite.AppWebApi.Controllers
 {
+    [RoutePrefix("api/v1/contact")]
     public class ContactController : ApiController
     {
         private readonly IContactService _contactService;
@@ -42,14 +44,15 @@ namespace AcmeWebsite.AppWebApi.Controllers
         }
 
         [HttpPost]
-        public Task<HttpResponseMessage> AddContact(Contact contact)
+        public Task<HttpResponseMessage> AddContact(ContactModel contact)
         {
             HttpResponseMessage response = new HttpResponseMessage();
 
             try
             {
+                //var contact = new Contact(contact.Name, contact.LastName, contact.Email, contact.Phone, contact.State, contact.City, contact.Message);
 
-                _contactService.Add();
+                _contactService.InsertNew(contact.Name,contact.LastName, contact.Email, contact.Phone, contact.State, contact.City, contact.Message);
                 response = Request.CreateResponse(HttpStatusCode.OK, "Message Sent");
             }
             catch (Exception ex)
@@ -61,24 +64,23 @@ namespace AcmeWebsite.AppWebApi.Controllers
             tcs.SetResult(response);
             return tcs.Task;
         }
-
-        /*
+        
         [HttpPost]
-        [Route("CreateMock")]
+        [Route("createmock")]
         public Task<HttpResponseMessage> AddContactMock()
         {
             HttpResponseMessage response = new HttpResponseMessage();
 
             try
             {
-                _contactService.Add(new Contact("Joel", "Santana", new Email("joels@mailinator.com"), new Phone("(098) 765-4321"), "NW", 12, "Message from Joel"));
-                _contactService.Add(new Contact("Julia", "Sagan", new Email("professional@mailinator.com"), new Phone("(123) 123-4321"), "TX", 22, "Message from "));
-                _contactService.Add(new Contact("Carl", "Nova", new Email("Galatic@mailinator.com"), new Phone("(342) 213-4321"), "KA", 11, "Message from "));
-                _contactService.Add(new Contact("Chuck", "Roberts", new Email("CRguy@mailinator.com"), new Phone("(343) 967-4321"), "NJ", 33, "Message from "));
-                _contactService.Add(new Contact("Melina", "Amaro", new Email("mwitch@mailinator.com"), new Phone("(753) 234-4321"), "CA", 21, "Message from "));
-                _contactService.Add(new Contact("Arnold", "Smith", new Email("brute@mailinator.com"), new Phone("(786) 232-4321"), "LI", 17, "Message from "));
-                _contactService.Add(new Contact("Michael", "Stone", new Email("theking@mailinator.com"), new Phone("(234) 743-4321"), "MN", 15, "Message from "));
-                _contactService.Add(new Contact("Eddie", "Simpson", new Email("edsimpson@mailinator.com"), new Phone("(233) 295-4321"), "AR", 13, "Message from "));
+                _contactService.InsertNew("Joel", "Santana", "joels@mailinator.com", "(098) 765-4321", "NW", 12, "Message from Joel");
+                _contactService.InsertNew("Julia", "Sagan","professional@mailinator.com", "(123) 123-4321", "TX", 22, "Message from ");
+                _contactService.InsertNew("Carl", "Nova", "Galatic@mailinator.com", "(342) 213-4321", "KA", 11, "Message from ");
+                _contactService.InsertNew("Chuck", "Roberts", "CRguy@mailinator.com", "(343) 967-4321", "NJ", 33, "Message from ");
+                _contactService.InsertNew("Melina", "Amaro", "mwitch@mailinator.com", "(753) 234-4321", "CA", 21, "Message from ");
+                _contactService.InsertNew("Arnold", "Smith", "brute@mailinator.com", "(786) 232-4321", "LI", 17, "Message from ");
+                _contactService.InsertNew("Michael", "Stone", "theking@mailinator.com", "(234) 743-4321", "MN", 15, "Message from ");
+                _contactService.InsertNew("Eddie", "Simpson", "edsimpson@mailinator.com", "(233) 295-4321", "AR", 13, "Message from ");
 
                 response = Request.CreateResponse(HttpStatusCode.OK, "Mock Created Sent");
             }
@@ -91,10 +93,7 @@ namespace AcmeWebsite.AppWebApi.Controllers
             tcs.SetResult(response);
             return tcs.Task;
         }
-        */
-
-
-
+        
     }
 
 
