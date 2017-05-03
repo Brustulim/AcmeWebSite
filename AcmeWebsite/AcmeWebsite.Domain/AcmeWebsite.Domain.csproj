@@ -45,7 +45,6 @@
     <Compile Include="IRepositories\IContactRepository.cs" />
     <Compile Include="IRepositories\IRepositoryBase.cs" />
     <Compile Include="IServices\IContactService.cs" />
-    <Compile Include="IServices\IServiceBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ContactService.cs" />
     <Compile Include="ValueObject\Email.cs" />

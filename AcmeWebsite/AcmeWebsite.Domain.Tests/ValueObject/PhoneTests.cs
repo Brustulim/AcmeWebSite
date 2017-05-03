@@ -51,8 +51,8 @@ namespace AcmeWebsite.Domain.Tests.ValueObject
         [TestMethod]
         public void Phone_GetPhoneFormated_Ok()
         {
-            Phone phone = new Phone("(979) 778-0978");
-            string formatted = phone.GetPhoneFormatted();
+            var phone = new Phone("(979) 778-0978");
+            var formatted = phone.GetPhoneFormatted();
             Assert.AreEqual("(979) 778-0978", formatted);
 
         }
@@ -60,14 +60,14 @@ namespace AcmeWebsite.Domain.Tests.ValueObject
         [TestMethod]
         public void Phone_GetPhoneFormated_Ok_Only_Digits()
         {
-            Phone phone = new Phone("(979) 778-0978");
+            var phone = new Phone("(979) 778-0978");
             Assert.AreEqual("9797780978", phone.Number);
         }
 
         [TestMethod]
         public void Phone_GetPhoneFormated_Verify_NotEqual()
         {
-            Phone phone = new Phone("(979) 778-0978");
+            var phone = new Phone("(979) 778-0978");
             Assert.AreNotEqual("(111) 111-1111", phone.GetPhoneFormatted());
         }
 

@@ -13,6 +13,7 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using AcmeWebsite.Web.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace AcmeWebsite.Web.Controllers
 {
@@ -24,7 +25,8 @@ namespace AcmeWebsite.Web.Controllers
         
         public async Task<ActionResult> Index()
         {
-            List<StateModel> statesList = new List<StateModel>();
+
+            var statesList = new List<StateModel>();
 
             using (var client = new HttpClient())
             {
@@ -35,7 +37,7 @@ namespace AcmeWebsite.Web.Controllers
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response = await client.GetAsync("api/v1/state/");
+                var response = await client.GetAsync("api/v1/state/");
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadAsStringAsync();
@@ -43,7 +45,6 @@ namespace AcmeWebsite.Web.Controllers
                 }
                 
                 ViewBag.States = statesList;
-                
             }
 
             return View();
@@ -52,7 +53,7 @@ namespace AcmeWebsite.Web.Controllers
         [Route("Home/GetCityJson/{stateAcronym}")]
         public async Task<ActionResult> GetCityJson(string stateAcronym)
         {
-            List<CityModel> citiesList = new List<CityModel>();
+            var citiesList = new List<CityModel>();
 
             using (var client = new HttpClient())
             {
@@ -62,22 +63,39 @@ namespace AcmeWebsite.Web.Controllers
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response = await client.GetAsync("api/v1/state/" + stateAcronym + "/city/");
+                var response = await client.GetAsync("api/v1/state/" + stateAcronym + "/city/");
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadAsStringAsync();
 
                     citiesList = JsonConvert.DeserializeObject<List<CityModel>>(result);
-
-                    //ViewBag.Cities = citiesList;
                 }
             }
             return Json(citiesList, JsonRequestBehavior.AllowGet);
         }
 
-        
+        [HttpPost]
         public async Task<ActionResult> PostContactForm(ContactModel contactModel)
         {
+
+            var captchaResponse = contactModel.ReCaptchaResponse;
+            
+            var secretKey = "6LfysB8UAAAAAPEj31MoXVLAR1NDo811EXvS0MGe";
+
+            using (var client = new WebClient())
+            {
+                var result =
+                    client.DownloadString(
+                        string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}",
+                            secretKey, captchaResponse));
+                var obj = JObject.Parse(result);
+                var success = (bool) obj.SelectToken("success");
+
+                if (!success)
+                    return Json(new { Success = "false", Message = "The captcha validation has failed! Plese, try again." });
+
+            }
+
             using (var client = new HttpClient())
             {
                 var acmeWebsiteAppWebApiUrl = ConfigurationManager.AppSettings["AcmeWebsiteAppWebApiUrl"];
@@ -89,29 +107,23 @@ namespace AcmeWebsite.Web.Controllers
                 var jSonContent = JsonConvert.SerializeObject(contactModel);
                 var content = new StringContent(jSonContent, UTF8Encoding.UTF8, "application/json");
                 
-                HttpResponseMessage response = await client.PostAsync("api/v1/contact", content);
+                var response = await client.PostAsync("api/v1/contact", content);
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadAsStringAsync();
-                    ViewBag.Sucess = true;
-                    return Content("<script language='javascript' type='text/javascript'>alert('Your message has been sent successfully!'); window.location='/home';</script>");
-                    
+                    return Json(new { Success = "true", Message = "" });
+
                 }
                 else
                 {
-                    //ViewBag.Sucess = false;
-                    //ViewBag.ErrorMessage = await response.Content.ReadAsStringAsync();
                     var error = await response.Content.ReadAsStringAsync();
-                    //return Content(string.Format("<script language='javascript' type='text/javascript'>alert('There was an error sending your contact: {0}');</script>", ViewBag.ErrorMessage));
-                    return Content(string.Format("<script language='javascript' type='text/javascript'>alert('There was an error sending your contact: {0}');<script language='javascript' type='text/javascript'>", error));
-                    
+                    return Json(new { Success = "false", Message = error });
+
                 }
 
             }
-            //return View();
-            //return RedirectToAction("Index");
             
-            return new EmptyResult();
+            return RedirectToAction("Index");
 
         }
 

@@ -6,7 +6,6 @@ namespace AcmeWebsite.Domain.IServices
 {
     public interface IContactService
     {
-        //Contact Get(int id);
         List<Contact> GetAll();
         Contact GetByEmail(Email email);
         void Save(Contact contact);

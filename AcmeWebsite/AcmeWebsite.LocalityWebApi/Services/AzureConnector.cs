@@ -16,7 +16,7 @@ namespace AcmeWebsite.LocalityWebApi.Services
 
         public AzureConnector()
         {
-            CloudStorageAccount storageAccount =
+            var storageAccount =
              CloudStorageAccount.Parse(
                  CloudConfigurationManager.GetSetting("AzureStorageConnectionString"));
 
@@ -26,8 +26,8 @@ namespace AcmeWebsite.LocalityWebApi.Services
         public List<State> GetStates()
         {
 
-            CloudTable stateTable = _cloudTableClient.GetTableReference("state");
-            TableQuery<State> query = new TableQuery<State>();
+            var stateTable = _cloudTableClient.GetTableReference("state");
+            var query = new TableQuery<State>();
 
             var states = stateTable.ExecuteQuery(query);
 
@@ -36,9 +36,8 @@ namespace AcmeWebsite.LocalityWebApi.Services
 
         public List<City> GetCities(string stateAcronym)
         {
-            CloudTable cityTable = _cloudTableClient.GetTableReference("city");
-            
-            TableQuery<City> query = new TableQuery<City>();
+            var cityTable = _cloudTableClient.GetTableReference("city");
+            var query = new TableQuery<City>();
 
             var cities = cityTable.ExecuteQuery(query).Where(c => c.PartitionKey.Equals(stateAcronym));
 

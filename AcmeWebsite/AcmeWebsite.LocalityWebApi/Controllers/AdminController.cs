@@ -18,7 +18,7 @@ namespace AcmeWebsite.LocalityWebApi.Controllers
         [HttpGet]
         public Task<HttpResponseMessage> CreateTables()
         {
-            HttpResponseMessage response = new HttpResponseMessage();
+            var response = new HttpResponseMessage();
 
             try
             {
@@ -41,7 +41,7 @@ namespace AcmeWebsite.LocalityWebApi.Controllers
         [HttpPost]
         public Task<HttpResponseMessage> InsertState(string acronym, string name)
         {
-            HttpResponseMessage response = new HttpResponseMessage();
+            var response = new HttpResponseMessage();
 
             try
             {

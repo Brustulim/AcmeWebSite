@@ -14,5 +14,6 @@ namespace AcmeWebsite.Web.Models
         public string State { get; set; }
         public int City { get; set; }
         public string Message { get; set; }
+        public string ReCaptchaResponse { get; set; }
     }
 }

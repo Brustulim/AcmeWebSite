@@ -17,12 +17,10 @@ namespace AcmeWebsite.Repositories
         public RepositoryBase(EfDbContext context)
         {
             _context = context;
-            //Context = new EfDbContext();
         }
         
         private DbSet<TEntity> Entity { get { return _context.Set<TEntity>(); } }
-
-
+        
 
         public void Add(TEntity obj)
         {

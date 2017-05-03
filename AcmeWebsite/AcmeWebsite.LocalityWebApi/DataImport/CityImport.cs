@@ -15,10 +15,5 @@ namespace AcmeWebsite.LocalityWebApi.DataImport
         public string rank { get; set; }
         public string state { get; set; }
     }
-
     
-
-
-
-
 }

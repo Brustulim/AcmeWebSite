@@ -32,57 +32,114 @@
     <!-- jQuery -->
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 
+    <!-- ReCaptcha -->
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-   
+
     <script type="text/javascript">
 
-                                $(function () {
-                                    $('#State').on('change', function () {
-                                        var cityDropdown = $('#City');
-                                        //disable city drop down
-                                        cityDropdown.prop('disabled', 'disabled');
-                                        //clear drop down of old city
-                                        cityDropdown.empty();
+        $(function () {
+            $('#State').on('change', function () {
+                var cityDropdown = $('#City');
+                //disable city drop down
+                cityDropdown.prop('disabled', 'disabled');
+                //clear drop down of old city
+                cityDropdown.empty();
 
-                                        //retrieve selected state
-                                        var state = $(this).val();
-                                        if (state.length > 0) {
-                                            // retrieve data using a Url.Action() to construct url
-                                            $.getJSON('@Url.Action("GetCityJson")', {
-                                                stateAcronym: state
-                                            })
-                                            .done(function (data) {
-                                                //re-enable city drop down
-                                                cityDropdown.removeProp('disabled');
-                                                //for each returned state
-                                                $.each(data, function (i, city) {
+                //retrieve selected state
+                var state = $(this).val();
+                if (state.length > 0) {
+                    // retrieve data using a Url.Action() to construct url
+                    $.getJSON('@Url.Action("GetCityJson")', {
+                        stateAcronym: state
+                    })
+                    .done(function (data) {
+                        //re-enable city drop down
+                        cityDropdown.removeProp('disabled');
+                        //for each returned state
+                        $.each(data, function (i, city) {
 
-                                                    var option = $('<option></option>').attr("value", data[i].Id).text(data[i].Name);
-                                                    cityDropdown.append(option);
+                            var option = $('<option></option>').attr("value", data[i].Id).text(data[i].Name);
+                            cityDropdown.append(option);
 
-                                                });
+                        });
 
-                                            })
-                                            .fail(function (jqxhr, textStatus, error) {
-                                                var err = textStatus + ", " + error;
-                                                console.log("Request Failed: " + err);
-                                            });
-                                        }
-                                    });
-                                })
+                    })
+                    .fail(function (jqxhr, textStatus, error) {
+                        var err = textStatus + ", " + error;
+                        console.log("Request Failed: " + err);
+                    });
+                }
+            });
+        })
+
+   
+        function ContactPost() {
+            var name = $('#Name').val();
+            var lastName = $('#LastName').val();
+            var email = $('#Email').val();
+            var phone = $('#Phone').val();
+            var state = $('#State').val();
+            var city = $('#City').val();
+            var message = $('#Message').val();
+
+            //get recaptcha response
+            var reCaptchaResponse = grecaptcha.getResponse();
+
+            var contactModel = {
+                Name: name,
+                LastName: lastName,
+                Email: email,
+                Phone: phone,
+                State: state,
+                City: city,
+                Message: message,
+                ReCaptchaResponse: reCaptchaResponse
+            };
+
+            $.post('/Home/PostContactForm', contactModel, reCaptchaResponse).success(function (data) {
+
+                if (data.Success == "true") {
+                    $('#success').show();
+                    $('.divForm').hide();
+
+                    $('#Name').val('');
+                    $('#LastName').val('');
+                    $('#Email').val('');
+                    $('#Phone').val('');
+                    $('#State').val('');
+                    $('#City').val('');
+                    $('#Message').val('');
+
+                } else {
+                    //reset captcha
+                    grecaptcha.reset();
+
+                    $('#validationError').show();
+                    $('#returnMessage').text(data.Message);
+                }
+            }).error(function (data) {
+                //reset captcha
+                grecaptcha.reset();
+
+                $('#validationError').show();
+                $('#returnMessage').text('error: ' + data.Message);
+
+            });
+        }
+
     
-    
 
-    
-    
     </script>
 
-    
+   
+
 </head>
 
 <body id="page-top" class="index">
@@ -232,14 +289,6 @@
                     </p>
                 </div>
                 <div class="col-lg-8 col-lg-offset-2 text-center">
-                    @*<a href="#" class="btn btn-lg btn-outline">
-                            <i class="fa fa-download"></i> Download Theme
-                        </a>*@
-                    @*<ul>
-                            <li><b>Mission: </b> Make the World More Fun</li>
-                            <li><b>Vision: </b> Change the history end</li>
-                            <li><b>Values: </b> Be committed to creativity and lack of sense of our customers</li>
-                        </ul>*@
 
                 </div>
             </div>
@@ -249,25 +298,25 @@
     <!-- Contact Section -->
     <section id="contact">
         <div class="container">
-            <div class="row">
+            <div class="row divForm">
                 <div class="col-lg-12 text-center">
                     <h2>Contact Us!</h2>
                     <hr class="star-primary">
                 </div>
             </div>
-            <div class="row">
+
+            <div class="row divForm">
                 <div class="col-lg-8 col-lg-offset-2">
 
                     <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
                     <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
-                    @using (Html.BeginForm("PostContactForm", "Home", FormMethod.Post))
-                    {
-                        @*< form name="sentMessage" id="contactForm" novalidate>*@
 
+
+                    @using (Ajax.BeginForm("PostContactForm", "Home", new AjaxOptions() { OnComplete = "teste" }))
+                    {
 
 
                         <div class="row control-group">
-                            @*<span class="col-xs-1  input-group-addon"><i class="glyphicon glyphicon-user"></i></span>*@
                             <div class="form-group col-xs-12 floating-label-form-group controls">
                                 <label for="Name">First Name</label>
                                 <input type="text" class="form-control" placeholder="First Name" id="Name" name="Name" required data-validation-required-message="Please enter your first name.">
@@ -275,7 +324,6 @@
                             </div>
                         </div>
                         <div class="row control-group">
-                            @*<span class="col-xs-1 input-group-addon"><i class="glyphicon glyphicon-user"></i></span>*@
                             <div class="form-group col-xs-12 floating-label-form-group controls">
                                 <label for="LastName">Last Name</label>
                                 <input type="text" class="form-control" placeholder="Last Name" id="LastName" name="LastName" required data-validation-required-message="Please enter your last name.">
@@ -284,7 +332,6 @@
                         </div>
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
-                                @*<span for="email" class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>*@
                                 <label for="Email">Email Address</label>
                                 <input type="email" class="form-control" placeholder="Email Address" id="Email" name="Email" required data-validation-required-message="Please enter a valid email address.">
                                 <p class="help-block text-danger"></p>
@@ -292,45 +339,35 @@
                         </div>
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
-                                @*<span for="phone" class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>*@
                                 <label for="Phone">Phone Number</label>
                                 <input type="tel" class="form-control" placeholder="Phone Number" id="Phone" name="Phone" required data-validation-required-message="Please enter your phone number.">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
-
-
+                        
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
-                                @*<div class="col-md-4 selectContainer floating-label-form-group">*@
-
                                 <label for="State">State</label>
-                                <select name="State" id="State" class="form-control selectpicker" placeholder="State">
+                                <select name="State" id="State" class="form-control" placeholder="State">
                                     <option value="">Please select your state</option>
                                     @if (!IsPost)
                                     {
                                         foreach (StateModel item in ViewBag.States)
-                                         {
-                                             <option value="@item.Acronym">@item.Name</option>
-                                         }
+                                        {
+                                            <option value="@item.Acronym">@item.Name</option>
+                                        }
                                     }
                                 </select>
-
-                                @*</div>*@
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
 
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
-                                @*<div class="col-md-4 selectContainer floating-label-form-group">*@
-
                                 <label for="City">City</label>
                                 <select name="City" id="City" class="form-control selectpicker" placeholder="City">
                                     <option value="">Please select your city</option>
                                 </select>
-                                @*</div>*@
-
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
@@ -343,19 +380,31 @@
                             </div>
                         </div>
 
-
-                        <br>
-
-                        <div id="success"></div>
+                        <div id="validationError" style="display: none" class="col-lg-8 col-lg-offset-2 alert alert-danger">
+                            <strong>
+                                <p id="returnMessage"> </p>
+                            </strong>
+                        </div>
+                        
                         <div class="row">
-                            <div class="form-group col-xs-12">
-                                <button type="submit" class="btn btn-success btn-lg">Send</button>
+                            <div class="g-recaptcha form-group col-xs-6" data-sitekey="6LfysB8UAAAAAIcpBGuh8-GDZw7JTC5X2FqeRkRt"></div>
+                                <div class="form-group col-xs-6">
+                                <button type="button" class="btn btn-success btn-lg" onclick="ContactPost()">Send</button>
                             </div>
                         </div>
                     }
 
                 </div>
             </div>
+
+            <div id="success" style="display: none" class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>Thank You!</h2>
+                    <hr class="star-primary">
+                    <h4>Your message has been sent successfully!</h4>
+                </div>
+            </div>
+
         </div>
     </section>
 

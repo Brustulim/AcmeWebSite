@@ -27,7 +27,7 @@ namespace AcmeWebsite.AppWebApi.Controllers
         [HttpGet]
         public Task<HttpResponseMessage> GetContacts()
         {
-            HttpResponseMessage response = new HttpResponseMessage();
+            var response = new HttpResponseMessage();
 
             try
             {
@@ -47,21 +47,11 @@ namespace AcmeWebsite.AppWebApi.Controllers
         [HttpPost]
         public Task<HttpResponseMessage> AddContact([FromBody]ContactModel contactModel)
         {
-            HttpResponseMessage response = new HttpResponseMessage();
+            var response = new HttpResponseMessage();
 
             try
             {
-                //var contact = new Contact()  
-                //{
-                //    Name = contactModel.Name,
-                //    LastName = contactModel.LastName,
-                //    Email = new Email(contactModel.Email),
-                //    Phone = new Phone(contactModel.Phone),
-                //    State = contactModel.State,
-                //    City = contactModel.City,
-                //    Message = contactModel.Message
-                //};
-
+                
                 var contact = new Contact(
                     contactModel.Name, 
                     contactModel.LastName,
@@ -70,8 +60,7 @@ namespace AcmeWebsite.AppWebApi.Controllers
                     contactModel.State,
                     contactModel.City,
                     contactModel.Message);
-
-
+                
                 _contactService.InsertNew(contact);
                 response = Request.CreateResponse(HttpStatusCode.OK, "Message Sent");
             }
@@ -89,10 +78,11 @@ namespace AcmeWebsite.AppWebApi.Controllers
         [Route("createmock")]
         public Task<HttpResponseMessage> AddContactMock()
         {
-            HttpResponseMessage response = new HttpResponseMessage();
+            var response = new HttpResponseMessage();
 
             try
             {
+                //Mock
                 //_contactService.InsertNew("Joel", "Santana", "joels@mailinator.com", "(098) 765-4321", "NW", 12, "Message from Joel");
                 //_contactService.InsertNew("Julia", "Sagan","professional@mailinator.com", "(123) 123-4321", "TX", 22, "Message from ");
                 //_contactService.InsertNew("Carl", "Nova", "Galatic@mailinator.com", "(342) 213-4321", "KA", 11, "Message from ");
@@ -102,7 +92,7 @@ namespace AcmeWebsite.AppWebApi.Controllers
                 //_contactService.InsertNew("Michael", "Stone", "theking@mailinator.com", "(234) 743-4321", "MN", 15, "Message from ");
                 //_contactService.InsertNew("Eddie", "Simpson", "edsimpson@mailinator.com", "(233) 295-4321", "AR", 13, "Message from ");
 
-                response = Request.CreateResponse(HttpStatusCode.OK, "Mock Created Sent");
+                response = Request.CreateResponse(HttpStatusCode.OK, "Mock Created");
             }
             catch (Exception ex)
             {

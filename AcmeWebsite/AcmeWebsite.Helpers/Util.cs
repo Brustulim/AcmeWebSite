@@ -8,11 +8,11 @@ namespace AcmeWebsite.Helpers
         public static string ReturnOnlyDigits(string value)
         {
 
-            if (String.IsNullOrEmpty(value))
-                value = String.Empty;
+            if (string.IsNullOrEmpty(value))
+                value = string.Empty;
 
-            string digitsOnly = String.Empty;
-            foreach (char c in value)
+            var digitsOnly = string.Empty;
+            foreach (var c in value)
             {
                 // Do not use IsDigit as it will include more than the characters 0 through to 9
                 if (c >= '0' && c <= '9') digitsOnly += c;
@@ -28,9 +28,9 @@ namespace AcmeWebsite.Helpers
 
         public static string GenerateStringWithSpecificLength(int length)
         {
-            string result = "";
+            var result = "";
 
-            for (int cont = 1; cont <= length; cont++)
+            for (var cont = 1; cont <= length; cont++)
                 result += "X";
 
             return result;

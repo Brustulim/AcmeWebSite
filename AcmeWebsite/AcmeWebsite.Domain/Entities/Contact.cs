@@ -17,10 +17,8 @@ namespace AcmeWebsite.Domain.Entities
         public const int LastNameMaxLength = 30;
         public string LastName { get; private set; }
 
-        //ValueObject used here
         public Email Email { get; private set; }
 
-        //ValueObject used here
         public Phone Phone { get; private set; }
 
         public const int StateMaxLength = 2;
@@ -56,6 +54,7 @@ namespace AcmeWebsite.Domain.Entities
         {
             Validator.ForNullOrEmptyDefaultMessage(name, "Name");
             Validator.StringLengthDefaultMessage("Name", name, NameMinLength, NameMaxLength);
+            //Justa a example of Resources use 
             Validator.ForContainWhiteSpace(name, Error.NameCannotContainWhiteSpaces) ;
 
             Name = name;
@@ -65,14 +64,10 @@ namespace AcmeWebsite.Domain.Entities
         {
             Validator.ForNullOrEmptyDefaultMessage(lastName, "Last Name");
             Validator.StringLengthDefaultMessage("Last Name", lastName, LastNameMinFragmentLength, LastNameMaxLength);
-
-            //Verify if don´t exist fragments with less than const LastNameMinFragmentLength
-            //if (Regex.Match(lastName, @"^[a-zA-Z0-9]{3,30}$").Success)
-            //if (Regex.Match(lastName, @"\b.{1," + LastNameMinFragmentLength + @"}\b").Success)
-
-            string[] fragments = lastName.Split(' ');
+           
+            var fragments = lastName.Split(' ');
             if (Array.FindAll(fragments, f => f.Length < LastNameMinFragmentLength).Length > 0)
-                throw new Exception("The Last Name cannot contain fragments with less than " + LastNameMinFragmentLength + " characters");
+                throw new Exception($"The Last Name cannot contain fragments with less than {LastNameMinFragmentLength} characters");
 
             LastName = lastName;
         }

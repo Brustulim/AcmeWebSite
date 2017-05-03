@@ -21,11 +21,11 @@ namespace AcmeWebsite.LocalityWebApi.Controllers
         [HttpGet]
         public Task<HttpResponseMessage> GetStates()
         {
-            HttpResponseMessage response = new HttpResponseMessage();
+            var response = new HttpResponseMessage();
 
             try
             {
-                /*
+                /* Mock
                 List<State> states = new List<State>();
                 states.Add(new State("CA", "California"));
                 states.Add(new State("NJ", "New Jersey"));
@@ -48,11 +48,11 @@ namespace AcmeWebsite.LocalityWebApi.Controllers
         [Route("{stateAcronym}/city")]
         public Task<HttpResponseMessage> GetCities(string stateAcronym)
         {
-            HttpResponseMessage response = new HttpResponseMessage();
+            var response = new HttpResponseMessage();
 
             try
             {
-                /*
+                /* Mock
                 List<City> cities = new List<City>();
                 cities.Add(new City("CA", "Los Bambas", 1));
                 cities.Add(new City("NW", "New Blo", 2));

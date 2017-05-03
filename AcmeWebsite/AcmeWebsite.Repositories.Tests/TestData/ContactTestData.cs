@@ -10,7 +10,7 @@ namespace AcmeWebsite.Repositories.Tests.TestData
 
         public static List<Contact> Get()
         {
-            List<Contact> contacts = new List<Contact>();
+            var contacts = new List<Contact>();
             
             //Here we can change data and "re-run" unit tests wich diferent data
 
@@ -29,9 +29,9 @@ namespace AcmeWebsite.Repositories.Tests.TestData
 
         public static void AddOrUpdateTestData(IRepositoryBase<Contact> contactRepository)
         {
-            List<Contact> contacts = Get();
+            var contacts = Get();
 
-            foreach (Contact contact in contacts)
+            foreach (var contact in contacts)
                 contactRepository.AddOrUpdate(contact);
 
 

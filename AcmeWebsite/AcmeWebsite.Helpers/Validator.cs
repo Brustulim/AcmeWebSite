@@ -19,8 +19,8 @@ namespace AcmeWebsite.Helpers
             if (string.IsNullOrEmpty(propName))
                 throw new Exception("Property name cannot be empty!");
 
-            if (String.IsNullOrEmpty(value))
-                throw new Exception(propName + " is required!");
+            if (string.IsNullOrEmpty(value))
+                throw new Exception($"{propName} is required!");
         }
 
         public static void ForContainWhiteSpace(string value, string message)
@@ -35,10 +35,10 @@ namespace AcmeWebsite.Helpers
             if (string.IsNullOrEmpty(message))
                 throw new Exception("Message cannot be empty!");
 
-            if (String.IsNullOrEmpty(stringValue))
-                stringValue = String.Empty;
+            if (string.IsNullOrEmpty(stringValue))
+                stringValue = string.Empty;
 
-            int length = stringValue.Length;
+            var length = stringValue.Length;
             if (length > maximum)
             {
                 throw new Exception(message);
@@ -49,8 +49,9 @@ namespace AcmeWebsite.Helpers
         {
             if (string.IsNullOrEmpty(propName))
                 throw new Exception("Property name cannot be empty!");
+            var message = $"{propName} may not be greater than {maximum} characters!";
 
-            StringMaxLength(stringValue, maximum, propName + " may not be greater than " + maximum + " characters!");
+            StringMaxLength(stringValue, maximum, message);
         }
 
         public static void StringLength(string stringValue, int minimum, int maximum, string message)
@@ -59,10 +60,10 @@ namespace AcmeWebsite.Helpers
             if (string.IsNullOrEmpty(message))
                 throw new Exception("Message cannot be empty!");
 
-            if (String.IsNullOrEmpty(stringValue))
-                stringValue = String.Empty;
+            if (string.IsNullOrEmpty(stringValue))
+                stringValue = string.Empty;
 
-            int length = stringValue.Length;
+            var length = stringValue.Length;
             if (length < minimum || length > maximum)
             {
                 throw new Exception(message);
@@ -74,7 +75,9 @@ namespace AcmeWebsite.Helpers
             if (string.IsNullOrEmpty(propName))
                 throw new Exception("Property name cannot be empty!");
 
-            StringLength(stringValue, minimum, maximum, propName + " must be the " + minimum + " to " + maximum + " characters!");
+            var message = $"{propName} must be the {minimum} to {maximum} characters!";
+
+            StringLength(stringValue, minimum, maximum, message);
         }
         
         public static void AreEqual(string a, string b, string message)
