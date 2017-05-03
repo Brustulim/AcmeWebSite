@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Services.Client;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using AcmeWebsite.LocalityWebApi.Entities;
 using Microsoft.Azure;
 using Microsoft.WindowsAzure.Storage;

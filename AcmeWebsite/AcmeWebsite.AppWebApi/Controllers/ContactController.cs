@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
 using AcmeWebsite.AppWebApi.Model;
 using AcmeWebsite.Domain.Entities;
 using AcmeWebsite.Domain.IServices;
 using AcmeWebsite.Domain.ValueObject;
-
 
 namespace AcmeWebsite.AppWebApi.Controllers
 {

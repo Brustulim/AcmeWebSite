@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AcmeWebsite.Helpers
+﻿namespace AcmeWebsite.Helpers
 {
     public class Util
     {

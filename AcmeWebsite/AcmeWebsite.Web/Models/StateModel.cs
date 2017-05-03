@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace AcmeWebsite.Web.Models
+﻿namespace AcmeWebsite.Web.Models
 {
     public class StateModel 
     {
