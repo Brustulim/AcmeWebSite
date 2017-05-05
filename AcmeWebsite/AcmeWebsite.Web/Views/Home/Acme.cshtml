@@ -1,8 +1,7 @@
-﻿@{
+﻿
+@{
     Layout = null;
 }
-@using AcmeWebsite.Web.Models
-@model AcmeWebsite.Web.Models.ContactModel
 
 <!DOCTYPE html>
 <html lang="en">
@@ -28,114 +27,40 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
 
-    <!-- jQuery -->
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-
-    <!-- ReCaptcha -->
-    <script src='https://www.google.com/recaptcha/api.js'></script>
-
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
     <script type="text/javascript">
 
- 
-        $(function() {
-            $('#State').on('change', function() {
-                var cityDropdown = $('#City');
-                //disable city drop down
-                cityDropdown.prop('disabled', 'disabled');
-                //clear drop down of old city
-                cityDropdown.empty();
+    $(document).ready(function () {
+        $("#send").click(function () {
+            var contact = new Object();
+            contact.name = $("#first_name").val();
+            contact.lastname = $("#last_name").val();
+            contact.email = $("#email").val();
+            contact.phone = $("#phone").val();
+            contact.state = $("#state").val();
+            contact.city = $("#city").val();
+            contact.message = $("#message").val();
 
-                //retrieve selected state
-                var state = $(this).val();
-                if (state.length > 0) {
-                    // retrieve data using a Url.Action() to construct url
-                    $.getJSON('@Url.Action("GetCityJson")', {
-                            stateAcronym: state
-                        })
-                        .done(function(data) {
-                            //re-enable city drop down
-                            cityDropdown.removeProp('disabled');
-                            //for each returned state
-                            $.each(data, function(i, city) {
+            $.ajax({
+                url: "http://localhost:55469/api/v1/contact",
+                type: "Post",
+                dataType:'JSON',
+                data:contact,
 
-                                var option = $('<option></option>').attr("value", data[i].Id).text(data[i].Name);
-                                cityDropdown.append(option);
-
-                            });
-
-                        })
-                        .fail(function(jqxhr, textStatus, error) {
-                            var err = textStatus + ", " + error;
-                            console.log("Request Failed: " + err);
-                        });
-                }
+                success: function (data) {
+                    alert('Updated Successfully');
+                    //window.location.href = "../Index";
+                },
+                error: function (msg) { alert(msg); }
             });
         });
-
-
-        function ContactPost() {
-            var name = $('#Name').val();
-            var lastName = $('#LastName').val();
-            var email = $('#Email').val();
-            var phone = $('#Phone').val();
-            var state = $('#State').val();
-            var city = $('#City').val();
-            var message = $('#Message').val();
-
-            //get recaptcha response
-            var reCaptchaResponse = grecaptcha.getResponse();
-
-            var contactModel = {
-                Name: name,
-                LastName: lastName,
-                Email: email,
-                Phone: phone,
-                State: state,
-                City: city,
-                Message: message,
-                ReCaptchaResponse: reCaptchaResponse
-            };
-
-            $.post('/Home/PostContactForm', contactModel, reCaptchaResponse).success(function (data) {
-
-                if (data.Success == "true") {
-                    $('#success').show();
-                    $('.divForm').hide();
-
-                    $('#Name').val('');
-                    $('#LastName').val('');
-                    $('#Email').val('');
-                    $('#Phone').val('');
-                    $('#State').val('');
-                    $('#City').val('');
-                    $('#Message').val('');
-
-                } else {
-                    //reset captcha
-                    grecaptcha.reset();
-
-                    $('#validationError').show();
-                    $('#returnMessage').text(data.Message);
-                }
-            }).error(function (data) {
-                //reset captcha
-                grecaptcha.reset();
-
-                $('#validationError').show();
-                $('#returnMessage').text('error: ' + data.Message);
-
-            });
-        }
-
+    });
     </script>
-
 
 
 </head>
@@ -287,6 +212,14 @@
                     </p>
                 </div>
                 <div class="col-lg-8 col-lg-offset-2 text-center">
+                    @*<a href="#" class="btn btn-lg btn-outline">
+                            <i class="fa fa-download"></i> Download Theme
+                        </a>*@
+                    @*<ul>
+                            <li><b>Mission: </b> Make the World More Fun</li>
+                            <li><b>Vision: </b> Change the history end</li>
+                            <li><b>Values: </b> Be committed to creativity and lack of sense of our customers</li>
+                        </ul>*@
 
                 </div>
             </div>
@@ -296,116 +229,151 @@
     <!-- Contact Section -->
     <section id="contact">
         <div class="container">
-            <div class="row divForm">
+            <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2>Contact Us!</h2>
                     <hr class="star-primary">
                 </div>
             </div>
-
-            <div class="row divForm">
+            <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">
 
                     <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
                     <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
-
-
-                    @using (Ajax.BeginForm("PostContactForm", "Home", new AjaxOptions() { OnComplete = "teste" }))
-                    {
+                    <form name="sentMessage" id="contactForm" novalidate>
 
 
                         <div class="row control-group">
+                            @*<span class="col-xs-1  input-group-addon"><i class="glyphicon glyphicon-user"></i></span>*@
                             <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label for="Name">First Name</label>
-                                <input type="text" class="form-control" placeholder="First Name" id="Name" name="Name" required data-validation-required-message="Please enter your first name.">
+                                <label for="first_name">First Name</label>
+                                <input type="text" class="form-control" placeholder="First Name" id="first_name" required data-validation-required-message="Please enter your first name.">
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <div class="row control-group">
+                            @*<span class="col-xs-1 input-group-addon"><i class="glyphicon glyphicon-user"></i></span>*@
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label for="last_name">Last Name</label>
+                                <input type="text" class="form-control" placeholder="Last Name" id="last_name" required data-validation-required-message="Please enter your last name.">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label for="LastName">Last Name</label>
-                                <input type="text" class="form-control" placeholder="Last Name" id="LastName" name="LastName" required data-validation-required-message="Please enter your last name.">
+                                @*<span for="email" class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>*@
+                                <label for="email">Email Address</label>
+                                <input type="email" class="form-control" placeholder="Email Address" id="email" required data-validation-required-message="Please enter a valid email address.">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label for="Email">Email Address</label>
-                                <input type="email" class="form-control" placeholder="Email Address" id="Email" name="Email" required data-validation-required-message="Please enter a valid email address.">
+                                @*<span for="phone" class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>*@
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" class="form-control" placeholder="Phone Number" id="phone" required data-validation-required-message="Please enter your phone number.">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
-                        <div class="row control-group">
-                            <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label for="Phone">Phone Number</label>
-                                <input type="tel" class="form-control" placeholder="Phone Number" id="Phone" name="Phone" required data-validation-required-message="Please enter your phone number.">
-                                <p class="help-block text-danger"></p>
-                            </div>
-                        </div>
+
+                        <p textSize="3">State e City Here </p>
 
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label for="State">State</label>
-                                <select name="State" id="State" class="form-control" placeholder="State">
-                                    <option value="">Please select your state</option>
-                                    @if (!IsPost)
-                                    {
-                                        foreach (StateModel item in ViewBag.States)
-                                        {
-                                            <option value="@item.Acronym">@item.Name</option>
-                                        }
-                                    }
-                                </select>
+                                <div class="col-md-4 selectContainer floating-label-form-group">
+
+                                    @*<div class="input-group">*@
+                                        <label for="state">State</label>
+                                        <select name="state" class="form-control selectpicker" placeholder="State" id="state">
+                                            <option value="">Please select your state</option>
+                                            <option>Alabama</option>
+                                            <option>Alaska</option>
+                                            <option>Arizona</option>
+                                            <option>Arkansas</option>
+                                            <option>California</option>
+                                            <option>Colorado</option>
+                                            <option>Connecticut</option>
+                                            <option>Delaware</option>
+                                            <option>District of Columbia</option>
+                                            <option> Florida</option>
+                                            <option>Georgia</option>
+                                            <option>Hawaii</option>
+                                            <option>daho</option>
+                                            <option>Illinois</option>
+                                            <option>Indiana</option>
+                                            <option>Iowa</option>
+                                            <option> Kansas</option>
+                                            <option>Kentucky</option>
+                                            <option>Louisiana</option>
+                                            <option>Maine</option>
+                                            <option>Maryland</option>
+                                            <option> Mass</option>
+                                            <option>Michigan</option>
+                                            <option>Minnesota</option>
+                                            <option>Mississippi</option>
+                                            <option>Missouri</option>
+                                            <option>Montana</option>
+                                            <option>Nebraska</option>
+                                            <option>Nevada</option>
+                                            <option>New Hampshire</option>
+                                            <option>New Jersey</option>
+                                            <option>New Mexico</option>
+                                            <option>New York</option>
+                                            <option>North Carolina</option>
+                                            <option>North Dakota</option>
+                                            <option>Ohio</option>
+                                            <option>Oklahoma</option>
+                                            <option>Oregon</option>
+                                            <option>Pennsylvania</option>
+                                            <option>Rhode Island</option>
+                                            <option>South Carolina</option>
+                                            <option>South Dakota</option>
+                                            <option>Tennessee</option>
+                                            <option>Texas</option>
+                                            <option> Uttah</option>
+                                            <option>Vermont</option>
+                                            <option>Virginia</option>
+                                            <option>Washington</option>
+                                            <option>West Virginia</option>
+                                            <option>Wisconsin</option>
+                                            <option>Wyoming</option>
+                                        </select>
+                                    @*</div>*@
+                                </div>
+
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
+
+
+
+
 
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label for="City">City</label>
-                                <select name="City" id="City" class="form-control selectpicker" placeholder="City">
-                                    <option value="">Please select your city</option>
-                                </select>
+                                <label for="message">Message</label>
+                                <textarea rows="5" class="form-control" placeholder="Message" id="message" required data-validation-required-message="Please enter a message."></textarea>
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
 
-                        <div class="row control-group">
-                            <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label for="Message">Message</label>
-                                <textarea rows="5" class="form-control" placeholder="Message" id="Message" name="Message" required data-validation-required-message="Please enter a message."></textarea>
-                                <p class="help-block text-danger"></p>
-                            </div>
-                        </div>
 
-                        <div id="validationError" style="display: none" class="col-lg-8 col-lg-offset-2 alert alert-danger">
-                            <strong>
-                                <p id="returnMessage"> </p>
-                            </strong>
-                        </div>
 
+
+
+
+
+
+                        <br>
+                        <div id="success"></div>
                         <div class="row">
-                            <div class="g-recaptcha form-group col-lg-6 col-sm-12 col-xs-12" data-sitekey="6LfysB8UAAAAAIcpBGuh8-GDZw7JTC5X2FqeRkRt">
-                            </div>
-                        
-                        
-                            <div class="form-group col-lg-5 col-sm-12 col-xs-12">
-                                <button type="button" class="btn btn-success btn-lg" onclick="ContactPost()">Send</button>
+                            <div class="form-group col-xs-12">
+                                <button type="submit" id="send" class="btn btn-success btn-lg">Send</button>
                             </div>
                         </div>
-                    }
-
+                    </form>
                 </div>
             </div>
-
-            <div id="success" style="display: none" class="row">
-                <div class="col-lg-12 text-center">
-                    <h2>Thank You!</h2>
-                    <hr class="star-primary">
-                    <h4>Your message has been sent successfully!</h4>
-                </div>
-            </div>
-
         </div>
     </section>
 
